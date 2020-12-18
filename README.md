@@ -187,13 +187,13 @@ Project Link: [https://github.com/botblox/botblox-manager-firmware](https://gith
 [contributors-shield]: https://img.shields.io/github/contributors/botblox/repo.svg?style=for-the-badge
 [contributors-url]: https://github.com/botblox/repo/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/botblox/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/botblox/repo/network/members
+[forks-url]: https://github.com/botblox/botblox-manager-firmware/network/members
 [stars-shield]: https://img.shields.io/github/stars/botblox/repo.svg?style=for-the-badge
 [stars-url]: https://github.com/botblox/repo/stargazers
 [issues-shield]: https://img.shields.io/github/issues/botblox/repo.svg?style=for-the-badge
 [issues-url]: https://github.com/botblox/repo/issues
 [license-shield]: https://img.shields.io/github/license/botblox/repo.svg?style=for-the-badge
-[license-url]: https://github.com/botblox/botblox-manager-firmware/blob/main/LICENSE.md
+[license-url]: https://github.com/botblox/botblox-manager-firmware/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/botblox
 
