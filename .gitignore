@@ -1,0 +1,8 @@
+Debug/
+Binaries/
+IP175G_PARSER_BUILD Debug.launch
+Includes/
+.cproject
+.mxproject
+.project
+.settings/
