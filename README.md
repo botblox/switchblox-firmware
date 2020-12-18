@@ -189,9 +189,9 @@ Project Link: [https://github.com/botblox/botblox-manager-firmware](https://gith
 [forks-url]: https://github.com/botblox/botblox-manager-firmware/network/members
 [stars-shield]: https://img.shields.io/github/stars/botblox/repo.svg?style=for-the-badge
 [stars-url]: https://github.com/botblox/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/botblox/botblox-manager-firmware
+[issues-shield]: https://img.shields.io/github/issues/botblox/botblox-manager-firmware?style=for-the-badge
 [issues-url]: https://github.com/botblox/botblox-manager-firmware/issues
-[license-shield]: https://img.shields.io/github/license/botblox/repo.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/botblox/botblox-manager-firmware?style=for-the-badge
 [license-url]: https://github.com/botblox/botblox-manager-firmware/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/botblox
