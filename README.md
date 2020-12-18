@@ -183,12 +183,12 @@ Project Link: [https://github.com/botblox/botblox-manager-firmware](https://gith
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/botblox/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/botblox/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/botblox/repo.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors-anon/botblox/botblox-manager-firmware?style=for-the-badge
+[contributors-url]: https://github.com/botblox/botblox-manager-firmware/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/botblox/botblox-manager-firmware?style=for-the-badge
 [forks-url]: https://github.com/botblox/botblox-manager-firmware/network/members
-[stars-shield]: https://img.shields.io/github/stars/botblox/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/botblox/repo/stargazers
+[stars-shield]: https://img.shields.io/github/stars/botblox/botblox-manager-firmware?style=for-the-badge
+[stars-url]: https://github.com/botblox/botblox-manager-firmware/stargazers
 [issues-shield]: https://img.shields.io/github/issues/botblox/botblox-manager-firmware?style=for-the-badge
 [issues-url]: https://github.com/botblox/botblox-manager-firmware/issues
 [license-shield]: https://img.shields.io/github/license/botblox/botblox-manager-firmware?style=for-the-badge
