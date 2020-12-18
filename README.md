@@ -40,10 +40,10 @@
   <p align="center">
     Firmware created by BotBlox to configure settings on our products
     <br />
-    <a href="https://github.com/botblox/botblox-manager-firmware"><strong>Explore the docs »</strong></a>
+    <a href="https://botblox.atlassian.net/wiki/spaces/HARDWARE/overview"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/botblox/botblox-manager-firmware">View Demo</a>
+    <a href="https://botblox.atlassian.net/wiki/spaces/HARDWARE/overview">View Demo</a>
     ·
     <a href="https://github.com/botblox/botblox-manager-firmware/issues">Report Bug</a>
     ·
