@@ -84,7 +84,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://secureservercdn.net/160.153.138.163/257.9dc.myftpupload.com/wp-content/uploads/2020/06/Rev_C_Task_1_front.png)
 
 Here's a blank template to get started:
 **To avoid retyping too much info. Do a search and replace with your text editor for the following:**
