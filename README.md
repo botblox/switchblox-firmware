@@ -91,36 +91,36 @@ Welcome to BotBlox Firmware. We designed this firmware with a singular goal: to 
 
 ### Built With
 
-* []()
-* []()
-* []()
-
+* [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
 
 
 <!-- GETTING STARTED -->
+### Prerequisites
+
+Download and instal [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) - I used version 1.5.0 so I politely suggest that you use this version too.
+
+
 ## Getting Started
 
 To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Clone the repo
-   ```sh
+1. `cd` to `/path/to/STM32CubeIDE/workspace_1.5.0` directory
+```sh
+    cd /path/to/STM32CubeIDE/workspace_1.5.0
+```
+2. Clone this repo in the directory 
+```sh
    git clone https://github.com/botblox/botblox-manager-firmware.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
+```
+3. When you open `STM32CubeIDE` and choose `workspace_1.5.0`, you should see the project appear in the file directory within the application.
 
+If this project does not appear - this can happen (though I'm not sure why):
+1. Copy the `IP175G_PARSER_BUILD.ioc` to any directory at hand
+2. In `STM32CubeIDE`, go to `File`->`New`->`STM32 Project from an Existing STM32CubeMX configuration file (.ioc)`
+3. Select `/path/to/IP175G_PARSER_BUILD.ioc` and then `Finish`
+4. You know can generate code for the project with the correct periphery and DMA configuration on the STM32L011D4 processor on the SwitchBlox. 
+5. From the new project's directory, replace `Core/Inc/*` with `Core/Inc/*` in this repo.
+6. Now replace `Core/Src/*` in the project directory with `Core/Src/*` from this repo.
+7. You know have a local version (albeit a read-only version) on your machine which you can use. 
 
 
 <!-- USAGE EXAMPLES -->
@@ -131,12 +131,10 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 
-
 <!-- ROADMAP -->
 ## Roadmap
 
 See the [open issues](https://github.com/botblox/botblox-manager-firmware/issues) for a list of proposed features (and known issues).
-
 
 
 <!-- CONTRIBUTING -->
@@ -144,28 +142,22 @@ See the [open issues](https://github.com/botblox/botblox-manager-firmware/issues
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
+1. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+2. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3. Push to the Branch (`git push origin feature/AmazingFeature`)
+4. Open a Pull Request
 
 <!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-
-
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+BotBlox email - [Contact here](mailto:josh@kapek.org)
 
 Project Link: [https://github.com/botblox/botblox-manager-firmware](https://github.com/botblox/botblox-manager-firmware)
-
 
 
 <!-- ACKNOWLEDGEMENTS -->
@@ -174,9 +166,6 @@ Project Link: [https://github.com/botblox/botblox-manager-firmware](https://gith
 * []()
 * []()
 * []()
-
-
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
