@@ -67,7 +67,7 @@
       <a href="#installation">Installation</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a herf="#getting-started">Getting Started</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -93,8 +93,7 @@ Welcome to BotBlox Firmware. We designed this firmware with a singular goal: to 
 
 * [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
 
-
-<!-- GETTING STARTED -->
+<!-- Installation -->
 ## Installation
 
 You'll need to install the IDE used to configure the pin configurations of the STM32L011D4 on the SwitchBlox before you can run any firmware on it.
@@ -102,7 +101,6 @@ You'll need to install the IDE used to configure the pin configurations of the S
 ### Prerequisites
 
 Download and instal [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) - I used version 1.5.0 so I politely suggest that you use this version too.
-
 
 ### Getting Started
 
