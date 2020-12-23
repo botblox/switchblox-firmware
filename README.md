@@ -84,8 +84,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://secureservercdn.net/160.153.138.163/257.9dc.myftpupload.com/wp-content/uploads/2020/06/Rev_C_Task_1_front.png)
-
 Welcome to BotBlox Firmware. We designed this firmware with a singular goal: to allow our community of customers and developers to manually configure custom settings on BotBlox products, such as the SwitchBlox, our flagship Etheret switch. Our customers have requested for a while now that they want to be able to program VLAN membership, Quality-of-service, Port mirroring, etc on our products. This Firmware forms a part of our answer, along with our containerized pyhton application. 
 
 
@@ -165,8 +163,6 @@ Project Link: [https://github.com/botblox/botblox-manager-firmware](https://gith
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* []()
-* []()
 * []()
 
 
