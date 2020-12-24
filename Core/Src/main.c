@@ -151,7 +151,7 @@ void Write_Commands_To_IC() {
 		// We are going to assume that for now, the data is sent with the smallest byte [0:7] bits first, then [8:15]
 		Data = ((uint16_t) Commands_Total[Cmd_Index][3] << 8) | (Commands_Total[Cmd_Index][2]);
 
-		for(Generic_Index = 0; Generic_Index <= 1; Generic_Index++) {
+		for(Generic_Index = 0; Generic_Index <= 10; Generic_Index++) {
 			MIIM_DRIVER_WRITE(PHY, REG, Data);
 			HAL_Delay(1);
 		}
@@ -334,6 +334,7 @@ int main(void)
   MX_DMA_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(1000);
   Configuration_From_Eeprom();
 
   HAL_UART_Receive_DMA(&huart2, Buffer_Rx, buffer_size);
