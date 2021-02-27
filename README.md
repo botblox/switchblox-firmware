@@ -142,9 +142,25 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
   <img src="images/compile.png" alt="Compile Button"></img>
 </p>
 
-2. If you run into errors compiling the code, I'd like to know exactly what errors you run into. Generally, I have found that compiler issues with the source code are rare, assuming you are using STM32CubeIDE as that ships with the same GNU C/C++ compiler for ARM architecture. But issues here should be reported to the GitHub repo issues page on this project. In particular, we'd like to know what the `stdout` is.
-3. After compiling the application, you are now ready to debug/program. This requires the use of a J-Link probe, which is a hardware debugger. It should work with any J-Link debug probe though - BotBlox uses a SEGGER J-Link for example. 
-4. You will need to setup the debugging/programming configurations before the compiled code can be flashed to the MCU's flash memory. To do this, click on either `Debug`->`Debug Configurations` or `Run`->`Run Configurations`. In the modal, select either a GDB server that either autostarts when you start debugging or programming or a GDB server that is already running locally.
+2. If you run into errors compiling the code, I'd like to know exactly the errors you run into. Generally, I have found that compiler issues with the source code are rare, assuming you are using STM32CubeIDE as that ships with the same GNU C/C++ compiler for ARM architecture that I used to develop this. But issues here should be reported to the GitHub repo issues page on this project. In particular, we'd like to know what the `stdout` in the terminal is.
+
+3. After compiling the source code, you are now ready to debug/program the MCU on the SwitchBlox. This requires the use of a J-Link probe, which is a hardware debugger. It should work with any J-Link debug probe though - BotBlox uses the SEGGER J-Link for example. 
+
+4. You will need to setup the debugging/programming configurations before the compiled code can be flashed to the MCU's flash memory. To do this, click on either `Debug`->`Debug Configurations` or `Run`->`Run Configurations`.
+
+<div>
+  <p align="center">
+    <img src="images/debug.png"></img>
+  </p>
+  <p align="center">
+    <img src="images/program.png"></img>
+  </p>
+</div>
+
+
+In the modal, select either a GDB server that either autostarts when you start debugging or programming or a GDB server that is already running locally.
+
+
 5. For example, if you are using SEGGER J-Link to run the GDB server on localhost before debugging, you will need to download the JLinkGDBServer application from (this link)[https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack]. Please ensure that you have one of the correct debug probes that they specify. After installing, run this application and fill in the details in the dialog that it shows you (i.e. set the target to STM32L011D4 or choose from the MCU selection). When it starts up, it should indicate that the client hasn't connected to it yet, which it hasn't as you need to start the debugging client in STM32CubeIDE. So to start the GDB client in STM32CubeIDE, in the debug/run configuration modal, choose the remote GDB server and select the port that the running GDB server is open to (usually default of 2331 is fine). When you run the debugging, you should see that the server is now connected to the client and will attempt to read and write the flash memory of the target MCU (STM32L011D4).
 6. Alternatively, you can just autostart the GDB server when you are debugging or programming. 
 7. There are numerous errors that can happen at this point, potential fixes include:
