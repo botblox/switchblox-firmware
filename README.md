@@ -123,7 +123,11 @@ The project sometimes doesn't appear in the file explorerin STM32CubeIDE and I a
 9. Compile the source code and ensure that it compiles with no errors.
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Usage and Debugging
+
+<p align="center">
+  <img src="images/logo.png" alt="Logo" width="160" height="160">
+</p>
 
 This project is complex because it is difficult to know how to use the source code. One has to compile it, then use a debugger/programmer to upload the code to the STM32L011D4 chip on the SwitchBlox. STM32CubeIDE does have a lot of abstractions to help with this but the following serves as a walkthrough/debugging guide to help walk you through the steps we took to successfully program the MCU.
 
