@@ -148,7 +148,7 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
 
 4. You will need to setup the debugging/programming configurations before the compiled code can be flashed to the MCU's flash memory. To do this, click on either `Debug`->`Debug Configurations` or `Run`->`Run Configurations`.
 
-<div>
+<div style="display:flex; flex-direction: row">
   <p align="center" width="50%" float="left" padding="5px">
     <img src="images/debug.png"></img>
   </p>
