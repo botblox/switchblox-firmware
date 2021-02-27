@@ -130,7 +130,7 @@ This project is complex because it is difficult to know how to use the source co
 Thankfully, STM32CubeIDE does have a lot of abstractions to help with this but the following serves as a walkthrough/debugging guide to help walk you through the steps we took to successfully program the MCU. When you open a workspace in STM32CubeIDE, you should be treated with this view.
 
 <p align="center">
-  <img src="images/opening.png" alt="Opening" width="320" height="320"></img>
+  <img src="images/opening.png" alt="Opening"></img>
 </p>
 
 
@@ -139,7 +139,7 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
 1. Navigate to the toolbar and use the `Hammer` icon to compile the source code using the GCC compiler for C/C++.
 
 <p align="center">
-  <img src="images/compile.png" alt="Compile Button" width="160" height="160"></img>
+  <img src="images/compile.png" alt="Compile Button"></img>
 </p>
 
 2. If you run into errors compiling the code, I'd like to know exactly what errors you run into. Generally, I have found that compiler issues with the source code are rare, assuming you are using STM32CubeIDE as that ships with the same GNU C/C++ compiler for ARM architecture. But issues here should be reported to the GitHub repo issues page on this project. In particular, we'd like to know what the `stdout` is.
