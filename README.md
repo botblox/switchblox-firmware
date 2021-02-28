@@ -152,11 +152,11 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
 <span style="display:flex; float:none; justify-content:center;">
   <p align="center" width="50%">
     <img src="images/debug.png"></img>
-    <figcaption>Icon to select the debugging configuration</figcaption>
+    <figcaption align="center">Icon to select the debugging configuration</figcaption>
   </p>
   <p align="center" width="50%">
     <img src="images/program.png"></img>
-    <figcaption>Icon to select the running configuration</figcaption>
+    <figcaption align="center">Icon to select the running configuration</figcaption>
   </p>
 </span>
 
