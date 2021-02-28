@@ -152,24 +152,19 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
 <span style="display:flex; float:none; justify-content:center;">
   <p align="center" width="50%">
     <img src="images/debug.png"></img>
+    <figcaption>Icon to select the debugging configuration</figcaption>
   </p>
   <p align="center" width="50%">
     <img src="images/program.png"></img>
+    <figcaption>Icon to select the running configuration</figcaption>
   </p>
 </span>
 
-<tr>
-  <td>
-    <img src="images/debug.png" style="width: 100px;"/>
-  </td>
-  <td>
-    <img src="images/program.png" style="width: 100px;"/>
-  </td>
-</tr>
+This will open up a modal, where you can select what debugging server and the method of debugging.
 
+// INSERT IMAGE OF DEBUG CONFIGRUATIONS HERE 
 
-
-In the modal, select either a GDB server that either autostarts when you start debugging or programming or a GDB server that is already running locally.
+Select either a GDB server that either autostarts when you start debugging or programming or a GDB server that is already running locally.
 
 
 5. For example, if you are using SEGGER J-Link to run the GDB server on localhost before debugging, you will need to download the JLinkGDBServer application from (this link)[https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack]. Please ensure that you have one of the correct debug probes that they specify. After installing, run this application and fill in the details in the dialog that it shows you (i.e. set the target to STM32L011D4 or choose from the MCU selection). When it starts up, it should indicate that the client hasn't connected to it yet, which it hasn't as you need to start the debugging client in STM32CubeIDE. So to start the GDB client in STM32CubeIDE, in the debug/run configuration modal, choose the remote GDB server and select the port that the running GDB server is open to (usually default of 2331 is fine). When you run the debugging, you should see that the server is now connected to the client and will attempt to read and write the flash memory of the target MCU (STM32L011D4).
