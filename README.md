@@ -158,6 +158,15 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
   </p>
 </span>
 
+<tr>
+  <td>
+    <img src="images/debug.png" />
+  </td>
+  <td>
+    <img src="images/program.png" />
+  </td>
+</tr>
+
 
 
 In the modal, select either a GDB server that either autostarts when you start debugging or programming or a GDB server that is already running locally.
