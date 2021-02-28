@@ -148,16 +148,16 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
 
 4. You will need to setup the debugging/programming configurations before the compiled code can be flashed to the MCU's flash memory. To do this, click on either `Debug`->`Debug Configurations` or `Run`->`Run Configurations`.
 
-<div>
-  <div style="display:flex; float:none; justify-content:center;">
-    <p align="center" width="50%">
-      <img src="images/debug.png"></img>
-    </p>
-    <p align="center" width="50%">
-      <img src="images/program.png"></img>
-    </p>
-  </div>
-</div>
+
+<span style="display:flex; float:none; justify-content:center;">
+  <p align="center" width="50%">
+    <img src="images/debug.png"></img>
+  </p>
+  <p align="center" width="50%">
+    <img src="images/program.png"></img>
+  </p>
+</span>
+
 
 
 In the modal, select either a GDB server that either autostarts when you start debugging or programming or a GDB server that is already running locally.
