@@ -40,7 +40,7 @@
   <p align="center">
     Firmware created by BotBlox to configure settings on our products
     <br />
-    <a href="https://botblox.atlassian.net/wiki/spaces/HARDWARE/overview"><strong>Explore the docs »</strong></a>
+    <a href="https://botblox.atlassian.net/wiki/spaces/HARDWARE/overview"><strong>Explore BotBlox Wiki »</strong></a>
     <br />
     <br />
     <a href="https://botblox.atlassian.net/wiki/spaces/HARDWARE/overview">View Demo</a>
@@ -160,9 +160,7 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
   </p>
 </div>
 
-This will open up a modal, where you can select what debugging server and the method of debugging.
-
-// INSERT IMAGE OF DEBUG CONFIGRUATIONS HERE 
+This will open up a modal, where you can select the project settings so the debugger knows where to look for the compiled .elf file.
 
 <div>
   <p align="center">
@@ -170,6 +168,16 @@ This will open up a modal, where you can select what debugging server and the me
     <p align="center">Here you can select the project where you source code resides and the target .elf file (built when you compiled the source code)</p>
   </p>
 </div>
+
+You want to select the project which corresponds to the source code in this repo (you may have changed the name but we have used `IP175G_PARSER_BUILD` as the name of our project). You will need to select the compiled `.elf` file for `C/C++ Application` and the project name in `Project`. Typically, it is a good idea in the `Build (if required) before launching` section to select the radio button for `Enable auto build` in case you make change in the source code and need to compile again, this will mean that when you click the `Debug` or `Run` icons, that the source code is saved and compiled again before the new `.elf` file is selected by the debugger.
+
+<div>
+  <p align="center">
+    <img src="images/debugger_settings.png" alt="Settings"></img>
+    <p align="center">In the second tab called `Debugger` you can change the settings of the debugger server</p>
+  </p>
+</div>
+
 
 Select either a GDB server that either autostarts when you start debugging or programming or a GDB server that is already running locally.
 
