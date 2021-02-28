@@ -160,10 +160,10 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
 
 <tr>
   <td>
-    <img src="images/debug.png" />
+    <img src="images/debug.png" style="width: 100px;"/>
   </td>
   <td>
-    <img src="images/program.png" />
+    <img src="images/program.png" style="width: 100px;"/>
   </td>
 </tr>
 
