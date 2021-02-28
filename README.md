@@ -156,7 +156,7 @@ You will note that the the project contains the `STM32L011D4PX_FLASH.ld` file. T
   </p>
   <p align="center" width="50%">
     <img src="images/program.png"></img>
-    <p textAlign="center" display="flex">Icon to select the running configuration</p>
+    <p align="center">Icon to select the running configuration</p>
   </p>
 </div>
 
