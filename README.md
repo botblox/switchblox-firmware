@@ -184,12 +184,25 @@ In the selector for `Debug probe`, select `SEGGER J-LINK`. We have not tested th
 
 In the panel for `Interface`, select `SWD` radio button. The targert device should already be set to `STM32L011D4`.
 
+Before you press `Apply` and then `Debug`, it is worth going over the process for setting up your own remote GDB server for those that chose the option. For those that chose `Autostart local GDB server`, you can ignore the following step.
 
 
+7. As mentioned previously, you will need to download the JLinkGDBServer application from (this link)[https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack]. Please ensure that you have one of the correct debug probes that they specify (SEGGER J-LINK for instance). After installing this application, run this application and fill in the details in the dialog that it shows you (i.e. set the target to STM32L011D4 or choose from the MCU selection). See below for full dialog of settings that it will present to you. 
 
-5. For example, if you are using SEGGER J-Link to run the GDB server on localhost before debugging, you will need to download the JLinkGDBServer application from (this link)[https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack]. Please ensure that you have one of the correct debug probes that they specify. After installing, run this application and fill in the details in the dialog that it shows you (i.e. set the target to STM32L011D4 or choose from the MCU selection). When it starts up, it should indicate that the client hasn't connected to it yet, which it hasn't as you need to start the debugging client in STM32CubeIDE. So to start the GDB client in STM32CubeIDE, in the debug/run configuration modal, choose the remote GDB server and select the port that the running GDB server is open to (usually default of 2331 is fine). When you run the debugging, you should see that the server is now connected to the client and will attempt to read and write the flash memory of the target MCU (STM32L011D4).
-6. Alternatively, you can just autostart the GDB server when you are debugging or programming. 
-7. There are numerous errors that can happen at this point, potential fixes include:
+<div>
+  <img src="images/gdb_server_settings" alt="Server Settings"></img>
+</div>
+
+You will notice that it even generates CLI options that you can use to invoke the server on programmatically. In fact, this is what STM32CubeIDE does when it autostarts a GDB server if you select that option. If you press `Ok`, you will be presented with the logging output from the server. 
+
+<div>
+  <img src="images/plugin.png" alt="Plugin"></img>
+</div>
+
+It should indicate that the client hasn't connected to it yet and (persumably) that you haven't connected the debugger to the machine you are developing on. The former is because you need to select `Apply` and then `Debug` in the debugger settings modal discussed in (6). The latter is because the server does require the physical probe in order to start working.
+
+
+8. There are numerous errors that can happen at this point, potential fixes include:
   - Ensuring that you are holding the pins of debug probe so that they are making a connection with the 6-pin J-Link header on the SwitchBlox. This is fiddly so an adhesive can be used to hold the probe in place.
   - Ensuring that the configurations of the client and the server match (that they have the correct frequency, port mapping, etc)
   - Ensuring that the debug probe used in the `Debug Configurations` or `Run Configurations` modals are set to `J-Link` and not `ST-Link`. 
@@ -197,9 +210,11 @@ In the panel for `Interface`, select `SWD` radio button. The targert device shou
   - Another bug in STM32CubeIDE is that occasionally it flat out refuses to debug. This can be fixed with closing the IDE and opening it again and starting the procedure again.
   - It is always worthful to swap between using an autostarted GDB server and one that is running locally if one isn't working. I have found that for different OSes, local GDB server works and for others an autostarted on works. For example, on my Windows machine `STM32L011D4` is a recognisable target for the autostarted GDB server but not so for my Mac machine.
   - Get in touch! BotBlox are (unfortunately) very experienced at resolving these debugging issues now so we may be able to offer assistance, particularly if you are using a SEGGER J-Link. 
-8. Once a debug thread has been opened in STM32CubeIDE by the debugging driver (assuming you used `Debug` and not `Run` at this point), you can press the `play` button and use breakpoints to step through the code. I don't suggest you do this in production but this is useful for understanding how the code works. 
-9. For running in production, we suggest that you use `Run` as this will program the flash memory with the compiled code and immediately boot the MCU to run off that code.
-10. At this point, you are now ready to use the SwitchBlox and program it with our (managed software!)[https://github.com/botblox/botblox-manager-software]. 
+
+9. The next stages depend on your intentions as the developer. If you selected `Run` instead of `Debug`, the firmware will be flashed to the MCU's flash memory. At that point, you are now ready to configure managed settings on the SwitchBlox using our (managed software!)[https://github.com/botblox/botblox-manager-software].
+
+10. If you selected `Debug`, then a debug thread will open where you can add breakpoints and investigate how the code works. This is for developing purposes; if you are planning to use the firmware in production, this step is not needed.  
+
 11. Your feedback at any stage is welcome and any suggestions on improvements are most welcome. We want to build a community of developers and the more people contribute, the more value this firmware and software brings to others. 
 
 <!-- ROADMAP -->
