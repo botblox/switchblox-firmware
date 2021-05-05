@@ -35,7 +35,7 @@
     <img src="images/logo.png" alt="Logo" width="160" height="160">
   </a>
 
-  <h3 align="center">BotBlox Firmware</h3>
+  <h3 align="center">SwitchBlox Firmware</h3>
 
   <p align="center">
     Firmware created by BotBlox to configure settings on our products
@@ -45,9 +45,9 @@
     <br />
     <!-- <a href="https://botblox.atlassian.net/wiki/spaces/HARDWARE/overview">View Demo</a>
     · -->
-    <a href="https://github.com/botblox/botblox-manager-firmware/issues">Report Bug</a>
+    <a href="https://github.com/botblox/switchblox-firmware/issues">Report Bug</a>
     ·
-    <a href="https://github.com/botblox/botblox-manager-firmware/issues">Request Feature</a>
+    <a href="https://github.com/botblox/switchblox-firmware/issues">Request Feature</a>
   </p>
 </p>
 
@@ -218,7 +218,7 @@ It should indicate that the client hasn't connected to it yet and (persumably) t
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/botblox/botblox-manager-firmware/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/botblox/switchblox-firmware/issues) for a list of proposed features (and known issues).
 
 
 <!-- CONTRIBUTING -->
