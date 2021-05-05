@@ -108,7 +108,7 @@ To get a local copy up and running follow these simple steps.
 ```
 2. Clone this repo in the STM32CubeIDE directory 
 ```sh
-   git clone https://github.com/botblox/botblox-manager-firmware.git
+   git clone https://github.com/botblox/switchblox-firmware.git
 ```
 3. When you open `STM32CubeIDE` and choose `workspace_1.5.0`, you should see the project appear in the file directory within STM32CubeIDE.
 
@@ -241,21 +241,21 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 BotBlox email - [Contact here](mailto:josh@kapek.org)
 
-Project Link: [https://github.com/botblox/botblox-manager-firmware](https://github.com/botblox/botblox-manager-firmware)
+Project Link: [https://github.com/botblox/switchblox-firmware](https://github.com/botblox/switchblox-firmware)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors-anon/botblox/botblox-manager-firmware?style=for-the-badge
-[contributors-url]: https://github.com/botblox/botblox-manager-firmware/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/botblox/botblox-manager-firmware?style=for-the-badge
-[forks-url]: https://github.com/botblox/botblox-manager-firmware/network/members
-[stars-shield]: https://img.shields.io/github/stars/botblox/botblox-manager-firmware?style=for-the-badge
-[stars-url]: https://github.com/botblox/botblox-manager-firmware/stargazers
-[issues-shield]: https://img.shields.io/github/issues/botblox/botblox-manager-firmware?style=for-the-badge
-[issues-url]: https://github.com/botblox/botblox-manager-firmware/issues
-[license-shield]: https://img.shields.io/github/license/botblox/botblox-manager-firmware?style=for-the-badge
-[license-url]: https://github.com/botblox/botblox-manager-firmware/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors-anon/botblox/switchblox-firmware?style=for-the-badge
+[contributors-url]: https://github.com/botblox/switchblox-firmware/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/botblox/switchblox-firmware?style=for-the-badge
+[forks-url]: https://github.com/botblox/switchblox-firmware/network/members
+[stars-shield]: https://img.shields.io/github/stars/botblox/switchblox-firmware?style=for-the-badge
+[stars-url]: https://github.com/botblox/switchblox-firmware/stargazers
+[issues-shield]: https://img.shields.io/github/issues/botblox/switchblox-firmware?style=for-the-badge
+[issues-url]: https://github.com/botblox/switchblox-firmware/issues
+[license-shield]: https://img.shields.io/github/license/botblox/switchblox-firmware?style=for-the-badge
+[license-url]: https://github.com/botblox/switchblox-firmware/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/company/botblox/
 
