@@ -35,7 +35,7 @@
     <img src="images/logo.png" alt="Logo" width="160" height="160">
   </a>
 
-  <h3 align="center">SwitchBlox Firmware</h3>
+  <h3 align="center">SwitchBlox Firmware (In Development) </h3>
 
   <p align="center">
     Firmware created by BotBlox to configure settings on our products
