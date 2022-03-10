@@ -8,6 +8,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+volatile uint16_t us_timer = 0;
+
+// Allow shorter than 1 ms sleeps; this function takes an argument that represents tens of microseconds.
+// The wait time isn't exact, but it should be around 5-15 us * tens_of_us
+void MDIO_WAIT(uint16_t tens_of_us)
+{
+	// It was measured that one run of this loop takes about 5 us (in Release mode) to 8.5 us (in Debug mode)
+	for (us_timer = 0; us_timer < tens_of_us; ++us_timer) {}
+}
 
 void GPIO_SET_MDIO_MODE_INPUT() {
 	// Set MIDO pin to it's default status with HAL_GPIO_DeInit
@@ -124,16 +133,16 @@ void GPIO_SET_MODE_NORMAL() {
 
 void _MIIM_DRIVER_CLOCK_PULSE() {
 	HAL_GPIO_WritePin(GPIOA, MIIM_MDC_Pin, GPIO_PIN_RESET);
-	HAL_Delay(1);
+	MDIO_WAIT(1);
 	HAL_GPIO_WritePin(GPIOA, MIIM_MDC_Pin, GPIO_PIN_SET);
-	HAL_Delay(1);
+	MDIO_WAIT(1);
 }
 
 void _MIIM_DRIVER_START() {
 	// Preamble
-	//HAL_GPIO_WritePin(GPIOA, MIIM_MDIO_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, MIIM_MDIO_Pin, GPIO_PIN_SET);
 
-	for (uint8_t i=0; i<5; ++i) {
+	for (uint8_t i=0; i<32; ++i) {
 		_MIIM_DRIVER_CLOCK_PULSE();
 	}
 
@@ -205,10 +214,11 @@ void _MIIM_DRIVER_WRITE_DATA(uint16_t data) {
 		}
 		_MIIM_DRIVER_CLOCK_PULSE();
 	}
+	// final clock pulse afterwards
+	_MIIM_DRIVER_CLOCK_PULSE();
 	// reset clock and data
 	HAL_GPIO_WritePin(GPIOA, MIIM_MDIO_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOA, MIIM_MDC_Pin, GPIO_PIN_RESET);
-	// final clock pulse afterwards?
 }
 
 uint16_t _MIIM_DRIVER_READ_DATA() {
@@ -218,6 +228,8 @@ uint16_t _MIIM_DRIVER_READ_DATA() {
 		data = data + (HAL_GPIO_ReadPin(GPIOA, MIIM_MDIO_Pin) << (15-bitnum));
 		_MIIM_DRIVER_CLOCK_PULSE();
 	}
+	// final clock pulse afterwards
+	_MIIM_DRIVER_CLOCK_PULSE();
 	GPIO_SET_MODE_NORMAL();
 	// Reset clock and data
 	HAL_GPIO_WritePin(GPIOA, MIIM_MDIO_Pin, GPIO_PIN_SET);

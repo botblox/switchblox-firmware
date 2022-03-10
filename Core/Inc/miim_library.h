@@ -8,7 +8,7 @@
 #ifndef INC_MIIM_LIBRARY_H_
 #define INC_MIIM_LIBRARY_H_
 
-
+void MDIO_WAIT(uint16_t tens_of_us);
 void GPIO_SET_MDIO_MODE_INPUT();
 void GPIO_SET_MDIO_MDC_MODE_INPUT();
 void GPIO_SET_MODE_NORMAL();
