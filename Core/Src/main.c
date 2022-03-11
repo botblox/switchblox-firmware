@@ -33,9 +33,24 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+// Change the FW revision every time the communication protocol changes
+#define FW_REVISION 2
+
+// Type of the board
+// s = Switchblox, n = Switchblox Nano
+#define BOARD_TYPE 's'
+
 #define buffer_size 4
 #define stop_condition 100
 #define erase_condition 101
+#define read_condition 102
+#define fw_revision_condition 103
+#define board_condition 104
+
+#define read_mdio 1
+#define read_eeprom 2
+#define read_temp 3
 
 #define data_eeprom_base_addr 0x08080000
 #define data_eeprom_end_addr 0x080801FF
@@ -60,6 +75,11 @@ DMA_HandleTypeDef hdma_usart2_tx;
 
 /* USER CODE BEGIN PV */
 uint8_t Is_Commands_Ready = 0;
+uint8_t Is_Read_Requested = 0;
+uint8_t Is_Info_Requested = 0;
+
+uint8_t PHY_or_command_to_read = 0;
+uint8_t REG_to_read = 0;
 
 uint8_t Error[] = {2};
 uint8_t Success[] = {1};
@@ -88,45 +108,57 @@ static void MX_USART2_UART_Init(void);
 //}
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	if(Is_Erase()) {
-		Erase_Eeprom_All();
-	} else if(Has_Stopped()){
-		Is_Commands_Ready = 1;
-	} else {
-		Store_Temp_Command();
+	switch(Buffer_Rx[0]) {
+		case erase_condition:
+			Erase_Eeprom_All();
+			Clear_Commands();
+			Commands_Current_Index = 0;
+			// Is_Commands_Ready will tell the main loop to set config via MDIO, but it is empty;
+			// The main reason we set it here is to send the success via UART.
+			// That may take some time, so we don't want to do it here in the interrupt.
+			Is_Commands_Ready = 1;
+			break;
+		case stop_condition:
+			Is_Commands_Ready = 1;
+			break;
+		case read_condition:
+			PHY_or_command_to_read = Buffer_Rx[2];
+			REG_to_read = Buffer_Rx[3];
+			Is_Read_Requested = Buffer_Rx[1];
+			break;
+		case fw_revision_condition:
+			Is_Info_Requested = FW_REVISION;
+			break;
+		case board_condition:
+			Is_Info_Requested = BOARD_TYPE;
+			break;
+		default:
+			Store_Temp_Command();
+			break;
 	}
 
 	HAL_UART_Receive_DMA(&huart2, Buffer_Rx, buffer_size);
 }
 
-uint8_t Has_Stopped() {
-	uint8_t value_to_check = Buffer_Rx[0];
-	switch(value_to_check) {
-		case stop_condition:
-			return 1;
-		default:
-			return 0;
-	}
-	return 0;
-}
-
-uint8_t Is_Erase() {
-	uint8_t value_to_check = Buffer_Rx[0];
-	switch(value_to_check) {
-		case erase_condition:
-			return 1;
-		default:
-			return 0;
-	}
-	return 0;
-}
-
 void Store_Temp_Command() {
-	for(uint8_t i = 0; i < buffer_size; i++) {
-		Commands_Total[Commands_Current_Index][i] = Buffer_Rx[i];
-	}
+	if(Buffer_Rx[0] < 2 || Buffer_Rx[0] > 24 || Buffer_Rx[1] > 32)
+		return;
 
+	// This is a bit hacky but shrinks the program size. It just copies all 4 bytes from Buffer_Rx to the current command
+	*((uint32_t*)Commands_Total[Commands_Current_Index]) = *((uint32_t*)Buffer_Rx);
 	Commands_Current_Index++;
+}
+
+void Clear_Commands() {
+	// Reset each value in the Commands_Total array
+	for(uint8_t i = 0; i < maximum_commands; i++) {
+		// This is a bit hacky, but shrinks program size; it is equivalent to the below commented lines
+		(*(uint32_t*)Commands_Total[i]) = 0;
+		// Commands_Total[i][0] = 0;
+		// Commands_Total[i][1] = 0;
+		// Commands_Total[i][2] = 0;
+		// Commands_Total[i][3] = 0;
+	}
 }
 
 void Write_Commands_To_IC() {
@@ -151,13 +183,13 @@ void Write_Commands_To_IC() {
 	}
 
 	// Uncomment the following code to verify what was written to the MCU
+	// You may need to comment-out other parts of the code to fit in the memory in Debug mode
 	/*
 	for(uint8_t Cmd_Index = 0; Cmd_Index < maximum_commands; Cmd_Index++) {
 		PHY = Commands_Total[Cmd_Index][0];
 		REG = Commands_Total[Cmd_Index][1];
-		if(PHY < 2 || PHY > 24 || REG > 32) {
+		if(PHY == 0)
 			break;
-		}
 		// To verify what was written to the switch chip, add "dynamic printf"-type breakpoint to the following MDIO_WAIT line.
 		// "%u:%02u 0x%02x 0x%02x (%u %u)\n", PHY, REG, Data & 0xFF, (Data >> 8) & 0xFF, Data & 0xFF, (Data >> 8) & 0xFF
 		Data = MIIM_DRIVER_READ(PHY, REG);
@@ -169,7 +201,6 @@ void Write_Commands_To_IC() {
 
 uint8_t Save_Commands_To_Eeprom() {
 	uint32_t Current_Eeprom_Addr = data_eeprom_base_addr;
-	uint32_t Data_Word;
 
 	if (HAL_FLASHEx_DATAEEPROM_Unlock() == HAL_OK) {
 		for(uint8_t i = 0; i < maximum_commands; i++) {
@@ -178,10 +209,8 @@ uint8_t Save_Commands_To_Eeprom() {
 
 			Erase_Eeprom_Addr(Current_Eeprom_Addr);
 
-			// Create the 32 bit word from the 4x byte command
-			Data_Word = (((uint32_t) Commands_Total[i][3] << 24) | ((uint32_t) Commands_Total[i][2] << 16) | ((uint32_t) Commands_Total[i][1] << 8) | (Commands_Total[i][0]));
-
-			Write_Eeprom_Addr(Current_Eeprom_Addr, Data_Word);
+			// Create the 32 bit word from the 4-byte command
+			Write_Eeprom_Addr(Current_Eeprom_Addr, *((uint32_t*) Commands_Total[i]));
 		}
 		if(HAL_FLASHEx_DATAEEPROM_Lock() == HAL_OK) {
 			return 0;
@@ -263,13 +292,7 @@ void Configuration_From_Eeprom() {
 
 	Green_Light();
 
-	// Reset each value in the Commands_Total array
-	for(uint8_t i = 0; i < maximum_commands; i++) {
-		Commands_Total[i][0] = 0;
-		Commands_Total[i][1] = 0;
-		Commands_Total[i][2] = 0;
-		Commands_Total[i][3] = 0;
-	}
+	Clear_Commands();
 }
 
 uint8_t Erase_Eeprom_All(void) {
@@ -394,8 +417,45 @@ int main(void)
 		  Is_Commands_Ready = 0;
 		  Commands_Current_Index = 0;
 
-		  // Reset the LED to emit white light
+		  // Reset the LED to emit green light
 		  HAL_Delay(500);
+		  Green_Light();
+	  } else if (Is_Read_Requested) {
+		  // We do not set blue LED here because the action is usually so fast it is not even noticeable
+		  uint8_t buf[4];
+
+		  if (Is_Read_Requested == read_mdio) {
+			  uint16_t Data = MIIM_DRIVER_READ(PHY_or_command_to_read, REG_to_read);
+			  buf[0] = PHY_or_command_to_read;
+			  buf[1] = REG_to_read;
+			  // This is a bit hacky, but shrinks the program size; it is equivalent to the below commented lines
+			  *((uint16_t*)(buf + 2)) = Data;
+			  //buf[2] = Data & 0xFF;
+			  //buf[3] = (Data >> 8) & 0xFF;
+		  } else {
+			  if (PHY_or_command_to_read >= maximum_commands) {
+				  Send_Error_Via_Uart();
+				  Red_Light();
+				  Is_Read_Requested = 0;
+				  continue;
+			  }
+
+			  // This is a bit hacky but shrinks the program size; it just copies the 4 bytes to buf at once
+			  if (Is_Read_Requested == read_eeprom)
+				  *((uint32_t*)buf) = *((uint32_t*)(data_eeprom_base_addr + (4 * PHY_or_command_to_read + 4)));
+			  else
+				  *((uint32_t*)buf) = *((uint32_t*)Commands_Total[PHY_or_command_to_read]);
+		  }
+
+		  Is_Read_Requested = 0;
+		  Send_Success_Via_Uart();
+		  HAL_UART_Transmit(&huart2, buf, 4, 1000);
+		  Green_Light();
+	  } else if (Is_Info_Requested) {
+		  // We do not set blue LED here because the action is usually so fast it is not even noticeable
+		  Send_Success_Via_Uart();
+		  HAL_UART_Transmit(&huart2, &Is_Info_Requested, 1, 1000);
+		  Is_Info_Requested = 0;
 		  Green_Light();
 	  }
   }

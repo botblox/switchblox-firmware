@@ -54,8 +54,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-uint8_t Has_Stopped(void);
-uint8_t Is_Erase(void);
+void Clear_Commands(void);
 void Store_Temp_Command(void);
 void Write_Command_To_IC(void);
 uint8_t Save_Commands_To_Eeprom(void);
