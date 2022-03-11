@@ -243,6 +243,8 @@ void Configuration_From_Eeprom() {
 	uint8_t PHY;
 	uint16_t Data;
 
+	Blue_Light();
+
 	// Disable all ports until the config is set (if there is at least one config value)
 	for(PHY = 2; PHY <= 7 && Commands_Total[0][0] != 0; PHY++) {
 		Data = MIIM_DRIVER_READ(PHY, 0);
@@ -250,7 +252,6 @@ void Configuration_From_Eeprom() {
 		MIIM_DRIVER_WRITE(PHY, 0, Data);
 	}
 
-	Blue_Light();
 	Write_Commands_To_IC();
 
 	// Enable all ports after the config is set (if there is at least one config value)

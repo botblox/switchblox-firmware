@@ -28,23 +28,12 @@ void GPIO_SET_MDIO_MODE_INPUT() {
  	__HAL_RCC_GPIOA_CLK_ENABLE();
 
 	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GPIOA, MIIM_MDC_Pin, GPIO_PIN_RESET);
 
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|MIIM_MDC_Pin|LED_GREEN_Pin, GPIO_PIN_RESET);
-
-	  /*Configure GPIO pin : LED_BLUE_Pin */
-	  GPIO_InitStruct.Pin = LED_BLUE_Pin;
+	  /*Configure GPIO pin : MIIM_MDC_Pin */
+	  GPIO_InitStruct.Pin = MIIM_MDC_Pin;
 	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	  // Commented out to shrink program size and fit into the flash memory; these values are already set.
-	  //GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  //GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	  HAL_GPIO_Init(LED_BLUE_GPIO_Port, &GPIO_InitStruct);
-
-	  /*Configure GPIO pins : LED_RED_Pin MIIM_MDC_Pin LED_GREEN_Pin */
-	  GPIO_InitStruct.Pin = LED_RED_Pin|MIIM_MDC_Pin|LED_GREEN_Pin;
-	  // Commented out to shrink program size and fit into the flash memory; these values are already set.
-	  //GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	  //GPIO_InitStruct.Pull = GPIO_NOPULL;
 	  //GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -64,33 +53,9 @@ void GPIO_SET_MDIO_MDC_MODE_INPUT() {
 	// Set MDC pin to its default status with HAL_GPIO_Deinit
 	HAL_GPIO_DeInit(MIIM_MDC_GPIO_Port, MIIM_MDC_Pin);
 
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-
 	/* GPIO Ports Clock Enable */
 	__HAL_RCC_GPIOC_CLK_ENABLE();
  	__HAL_RCC_GPIOA_CLK_ENABLE();
-
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_RESET);
-
-	  /*Configure GPIO pin Output Level */
-	  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_GREEN_Pin, GPIO_PIN_RESET);
-
-	  /*Configure GPIO pin : LED_BLUE_Pin */
-	  GPIO_InitStruct.Pin = LED_BLUE_Pin;
-	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	  // Commented out to shrink program size and fit into the flash memory; these values are already set.
-	  //GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  //GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	  HAL_GPIO_Init(LED_BLUE_GPIO_Port, &GPIO_InitStruct);
-
-	  /*Configure GPIO pins : LED_RED_Pin MIIM_MDC_Pin LED_GREEN_Pin */
-	  GPIO_InitStruct.Pin = LED_RED_Pin|LED_GREEN_Pin;
-	  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	  // Commented out to shrink program size and fit into the flash memory; these values are already set.
-	  //GPIO_InitStruct.Pull = GPIO_NOPULL;
-	  //GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 	  /*Configure GPIO pin : MIIM_MDIO_Pin */
 	  GPIO_InitStruct.Pin = MIIM_MDIO_Pin;
@@ -113,23 +78,12 @@ void GPIO_SET_MODE_NORMAL() {
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 
 	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, MIIM_MDC_Pin|MIIM_MDIO_Pin, GPIO_PIN_RESET);
 
-	/*Configure GPIO pin Output Level */
-	HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|MIIM_MDC_Pin|LED_GREEN_Pin|MIIM_MDIO_Pin, GPIO_PIN_RESET);
-
-	/*Configure GPIO pin : LED_BLUE_Pin */
-	GPIO_InitStruct.Pin = LED_BLUE_Pin;
+	/*Configure GPIO pins : MIIM_MDC_Pin MIIM_MDIO_Pin */
+	GPIO_InitStruct.Pin = MIIM_MDC_Pin|MIIM_MDIO_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	// Commented out to shrink program size and fit into the flash memory; these values are already set.
-	//GPIO_InitStruct.Pull = GPIO_NOPULL;
-	//GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(LED_BLUE_GPIO_Port, &GPIO_InitStruct);
-
-	/*Configure GPIO pins : LED_RED_Pin MIIM_MDC_Pin LED_GREEN_Pin MIIM_MDIO_Pin */
-	GPIO_InitStruct.Pin = LED_RED_Pin|MIIM_MDC_Pin|LED_GREEN_Pin|MIIM_MDIO_Pin;
-	// Commented out to shrink program size and fit into the flash memory; these values are already set.
-	//GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	//GPIO_InitStruct.Pull = GPIO_NOPULL;
 	//GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
