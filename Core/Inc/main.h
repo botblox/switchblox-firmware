@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -69,7 +69,6 @@ void Blue_Light(void);
 void Red_Light(void);
 void Green_Light(void);
 void White_Light(void);
-//void JumpToSystemBootloader(void);
 
 
 /* USER CODE END EFP */

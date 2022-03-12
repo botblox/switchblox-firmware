@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -103,10 +103,6 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-//	HAL_UART_Transmit_DMA(&huart2, Buffer_Tx, buffer_size);
-//}
-
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	switch(Buffer_Rx[0]) {
 		case erase_condition:
@@ -222,7 +218,6 @@ uint8_t Save_Commands_To_Eeprom() {
 		Error_Handler();
 		return 1;
 	}
-	HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
 }
 
 void Erase_Eeprom_Addr(uint32_t Eeprom_Address) {
@@ -363,10 +358,6 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
-//  uint32_t JumpAddress= *(volatile uint32_t *)(0x1FFF0000 + 4);
-//  void (* boot_loader)(void) = (void *) JumpAddress;
-//  SYSCFG->CFGR1 = 0x1;  //Remap 0x00000000 to System Memory
-//  boot_loader();
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
    HAL_Init();
@@ -569,14 +560,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_SPEED_FREQ_LOW, 0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|MIIM_MDC_Pin|LED_GREEN_Pin|MIIM_MDIO_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(MIIM_MDC_GPIO_Port, LED_RED_Pin|MIIM_MDC_Pin|LED_GREEN_Pin|MIIM_MDIO_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : LED_BLUE_Pin */
   GPIO_InitStruct.Pin = LED_BLUE_Pin;
@@ -592,7 +583,7 @@ static void MX_GPIO_Init(void)
   //GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   //GPIO_InitStruct.Pull = GPIO_NOPULL;
   //GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(MIIM_MDC_GPIO_Port, &GPIO_InitStruct);
 
 }
 
