@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -54,8 +54,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-uint8_t Has_Stopped(void);
-uint8_t Is_Erase(void);
+void Clear_Commands(void);
 void Store_Temp_Command(void);
 void Write_Command_To_IC(void);
 uint8_t Save_Commands_To_Eeprom(void);
@@ -70,7 +69,6 @@ void Blue_Light(void);
 void Red_Light(void);
 void Green_Light(void);
 void White_Light(void);
-//void JumpToSystemBootloader(void);
 
 
 /* USER CODE END EFP */
