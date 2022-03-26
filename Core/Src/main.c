@@ -239,8 +239,28 @@ void Read_Eeprom_Data() {
 
 void Configuration_From_Eeprom() {
 	Read_Eeprom_Data();
+
+	uint8_t PHY;
+	uint16_t Data;
+
 	Blue_Light();
+
+	// Disable all ports until the config is set (if there is at least one config value)
+	for(PHY = 2; PHY <= 7 && Commands_Total[0][0] != 0; PHY++) {
+		Data = MIIM_DRIVER_READ(PHY, 0);
+		Data = Data | 0x0800;
+		MIIM_DRIVER_WRITE(PHY, 0, Data);
+	}
+
 	Write_Commands_To_IC();
+
+	// Enable all ports after the config is set (if there is at least one config value)
+	for(PHY = 2; PHY <= 7 && Commands_Total[0][0] != 0; PHY++) {
+		Data = MIIM_DRIVER_READ(PHY, 0);
+		Data = Data & ~0x0800;
+		MIIM_DRIVER_WRITE(PHY, 0, Data);
+	}
+
 	Green_Light();
 
 	// Reset each value in the Commands_Total array
