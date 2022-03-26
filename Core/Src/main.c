@@ -67,17 +67,8 @@ uint8_t Success[] = {1};
 uint8_t Buffer_Tx[buffer_size] = {80,81,82,83};
 uint8_t Buffer_Rx[buffer_size];
 
-uint8_t Generic_Index;
-uint32_t Current_Eeprom_Addr;
-
 uint8_t Commands_Total[maximum_commands][buffer_size];
 uint8_t Commands_Current_Index = 0;
-
-uint8_t PHY;
-uint8_t REG;
-uint16_t Data;
-
-uint8_t Condition;
 
 /* USER CODE END PV */
 
@@ -131,31 +122,48 @@ uint8_t Is_Erase() {
 }
 
 void Store_Temp_Command() {
-	for(Generic_Index = 0; Generic_Index < buffer_size; Generic_Index++) {
-		Commands_Total[Commands_Current_Index][Generic_Index] = Buffer_Rx[Generic_Index];
+	for(uint8_t i = 0; i < buffer_size; i++) {
+		Commands_Total[Commands_Current_Index][i] = Buffer_Rx[i];
 	}
 
 	Commands_Current_Index++;
 }
 
 void Write_Commands_To_IC() {
+	uint8_t PHY;
+	uint8_t REG;
+	uint16_t Data;
+
 	for(uint8_t Cmd_Index = 0; Cmd_Index < maximum_commands; Cmd_Index++) {
 		PHY = Commands_Total[Cmd_Index][0];
 		REG = Commands_Total[Cmd_Index][1];
 
 		// Test to see if PHY or REG are not acceptable values
-		if(PHY < 2 || PHY > 24 || REG < 0 || REG > 32) {
+		if(PHY < 2 || PHY > 24 || REG > 32) {
 			break;
 		}
 
 		// We are going to assume that for now, the data is sent with the smallest byte [0:7] bits first, then [8:15]
 		Data = ((uint16_t) Commands_Total[Cmd_Index][3] << 8) | (Commands_Total[Cmd_Index][2]);
 
-		for(Generic_Index = 0; Generic_Index <= 10; Generic_Index++) {
-			MIIM_DRIVER_WRITE(PHY, REG, Data);
-			HAL_Delay(1);
-		}
+		MIIM_DRIVER_WRITE(PHY, REG, Data);
+		MDIO_WAIT(1);
 	}
+
+	// Uncomment the following code to verify what was written to the MCU
+	/*
+	for(uint8_t Cmd_Index = 0; Cmd_Index < maximum_commands; Cmd_Index++) {
+		PHY = Commands_Total[Cmd_Index][0];
+		REG = Commands_Total[Cmd_Index][1];
+		if(PHY < 2 || PHY > 24 || REG > 32) {
+			break;
+		}
+		// To verify what was written to the switch chip, add "dynamic printf"-type breakpoint to the following MDIO_WAIT line.
+		// "%u:%02u 0x%02x 0x%02x (%u %u)\n", PHY, REG, Data & 0xFF, (Data >> 8) & 0xFF, Data & 0xFF, (Data >> 8) & 0xFF
+		Data = MIIM_DRIVER_READ(PHY, REG);
+		MDIO_WAIT(1);
+	}
+	// */
 }
 
 
@@ -164,14 +172,14 @@ uint8_t Save_Commands_To_Eeprom() {
 	uint32_t Data_Word;
 
 	if (HAL_FLASHEx_DATAEEPROM_Unlock() == HAL_OK) {
-		for(Generic_Index = 0; Generic_Index < maximum_commands; Generic_Index++) {
+		for(uint8_t i = 0; i < maximum_commands; i++) {
 			// Write to the EEPROM address in multiples of 4 bytes as we are writing a 32 bit word at a time
 			Current_Eeprom_Addr += 4;
 
 			Erase_Eeprom_Addr(Current_Eeprom_Addr);
 
 			// Create the 32 bit word from the 4x byte command
-			Data_Word = (((uint32_t) Commands_Total[Generic_Index][3] << 24) | ((uint32_t) Commands_Total[Generic_Index][2] << 16) | ((uint32_t) Commands_Total[Generic_Index][1] << 8) | (Commands_Total[Generic_Index][0]));
+			Data_Word = (((uint32_t) Commands_Total[i][3] << 24) | ((uint32_t) Commands_Total[i][2] << 16) | ((uint32_t) Commands_Total[i][1] << 8) | (Commands_Total[i][0]));
 
 			Write_Eeprom_Addr(Current_Eeprom_Addr, Data_Word);
 		}
@@ -207,8 +215,10 @@ void Write_Eeprom_Addr(uint32_t Eeprom_Address, uint32_t Data) {
 void Read_Eeprom_Data() {
 	uint32_t Current_Eeprom_Addr = data_eeprom_base_addr;
 	uint32_t Command;
+	uint8_t PHY;
+	uint8_t REG;
 
-	for(Generic_Index = 0; Generic_Index < maximum_commands; Generic_Index++) {
+	for(uint8_t i = 0; i < maximum_commands; i++) {
 		Current_Eeprom_Addr += 4;
 		Command = *(uint32_t *)(Current_Eeprom_Addr);
 
@@ -216,14 +226,14 @@ void Read_Eeprom_Data() {
 		REG = (uint8_t) ((Command & data_eeprom_second_byte_mask) >> 8);
 
 		// Check for invalid PHY and REG
-		if(PHY < 2 || PHY > 24 || REG < 0 || REG > 32) {
+		if(PHY < 2 || PHY > 24 || REG > 32) {
 			break;
 		}
 
-		Commands_Total[Generic_Index][0] = PHY;
-		Commands_Total[Generic_Index][1] = REG;
-		Commands_Total[Generic_Index][2] = (uint8_t) ((Command & data_eeprom_third_byte_mask) >> 16);
-		Commands_Total[Generic_Index][3] = (uint8_t) ((Command & data_eeprom_fourth_byte_mask) >> 24);
+		Commands_Total[i][0] = PHY;
+		Commands_Total[i][1] = REG;
+		Commands_Total[i][2] = (uint8_t) ((Command & data_eeprom_third_byte_mask) >> 16);
+		Commands_Total[i][3] = (uint8_t) ((Command & data_eeprom_fourth_byte_mask) >> 24);
 	}
 }
 
@@ -234,11 +244,11 @@ void Configuration_From_Eeprom() {
 	Green_Light();
 
 	// Reset each value in the Commands_Total array
-	for(Generic_Index = 0; Generic_Index < maximum_commands; Generic_Index++) {
-		Commands_Total[Generic_Index][0] = 0;
-		Commands_Total[Generic_Index][1] = 0;
-		Commands_Total[Generic_Index][2] = 0;
-		Commands_Total[Generic_Index][3] = 0;
+	for(uint8_t i = 0; i < maximum_commands; i++) {
+		Commands_Total[i][0] = 0;
+		Commands_Total[i][1] = 0;
+		Commands_Total[i][2] = 0;
+		Commands_Total[i][3] = 0;
 	}
 }
 
@@ -246,7 +256,7 @@ uint8_t Erase_Eeprom_All(void) {
 	uint32_t Current_Eeprom_Addr = data_eeprom_base_addr;
 
 	if(HAL_FLASHEx_DATAEEPROM_Unlock() == HAL_OK) {
-		for(Generic_Index = 0; Generic_Index < maximum_commands; Generic_Index++) {
+		for(uint8_t i = 0; i < maximum_commands; i++) {
 			Current_Eeprom_Addr += 4;
 
 			Erase_Eeprom_Addr(Current_Eeprom_Addr);
@@ -352,7 +362,7 @@ int main(void)
 		  Red_Light();
 		  Write_Commands_To_IC();
 		  Green_Light();
-		  Condition = Save_Commands_To_Eeprom();
+		  uint8_t Condition = Save_Commands_To_Eeprom();
 		  if(Condition == 0) {
 			  // Success
 			  Send_Success_Via_Uart();
@@ -476,7 +486,7 @@ static void MX_DMA_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  GPIO_InitTypeDef GPIO_InitStruct = {0, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_SPEED_FREQ_LOW, 0};
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -490,16 +500,18 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : LED_BLUE_Pin */
   GPIO_InitStruct.Pin = LED_BLUE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  // Commented out to shrink program size and fit into the flash memory; these values are already set.
+  //GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  //GPIO_InitStruct.Pull = GPIO_NOPULL;
+  //GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED_BLUE_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LED_RED_Pin MIIM_MDC_Pin LED_GREEN_Pin MIIM_MDIO_Pin */
   GPIO_InitStruct.Pin = LED_RED_Pin|MIIM_MDC_Pin|LED_GREEN_Pin|MIIM_MDIO_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  // Commented out to shrink program size and fit into the flash memory; these values are already set.
+  //GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  //GPIO_InitStruct.Pull = GPIO_NOPULL;
+  //GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
